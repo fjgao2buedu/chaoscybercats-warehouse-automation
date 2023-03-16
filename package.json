@@ -1,0 +1,41 @@
+{
+  "name": "chaoscybercats-warehouse-automation",
+  "version": "0.0.0",
+  "private": true,
+  "type": "commonjs",
+  
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "test": "DEBUG=chaoscybercats-warehouse-automation:server node ./bin/www"
+  },
+  "dependencies": {
+    "@azure/cosmos": "^3.17.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1",
+    "node-fetch": "^2.6.9",
+    "nodemon": "^2.0.21",
+    "openapi-types": "^12.1.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.1",
+    "yaml": "^2.2.1"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fjgao2buedu/chaoscybercats-warehouse-automation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fjgao2buedu/chaoscybercats-warehouse-automation/issues"
+  },
+  "homepage": "https://github.com/fjgao2buedu/chaoscybercats-warehouse-automation#readme",
+  "devDependencies": {},
+  "description": ""
+}
