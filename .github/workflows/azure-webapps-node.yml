@@ -19,9 +19,10 @@
 name: Azure Web Apps Node
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "node_ver" ]
-  workflow_dispatch:
+  
 
 env:
   AZURE_RESOURCE_GROUP: assignment-4-warehouse-automation_group
