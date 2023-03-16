@@ -18,7 +18,6 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "node-fetch": "^2.6.9",
-    "nodemon": "^2.0.21",
     "openapi-types": "^12.1.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.1",
