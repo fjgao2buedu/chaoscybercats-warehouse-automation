@@ -24,6 +24,7 @@ on:
   workflow_dispatch:
 
 env:
+  AZURE_RESOURCE_GROUP: assignment-4-warehouse-automation_group
   AZURE_WEBAPP_NAME: chaoscybercats-warehouse-automation    # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '18.x'                # set this to the node version to use
@@ -85,3 +86,9 @@ jobs:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        
+    - name: Azure CLI script
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az webapp deployment source config-zip -g ${{ env.AZURE_RESOURCE_GROUP }} -n ${{ env.AZURE_WEBAPP_NAME }} --src release.zip
