@@ -1,48 +1,9 @@
 require('dotenv').config();
-// require('node-fetch:fetch');
 const fetch = require('node-fetch')
-// Get Cosmos Client
-var { CosmosClient } = require("@azure/cosmos");
 var express = require('express');
 var router = express.Router();
 
-const config = require('../config')
 const url = require('url')
-
-const databaseId = config.database.id
-const containerId = config.container.id
-
-async function queryContainer(shipperID) {
-  const client = new CosmosClient(process.env.AZURE_COSMOS_CONNECTIONSTRING);
-  const querySpec = {
-    query: // query items with shipperID
-      "SELECT * FROM c WHERE c.ShipperID = @shipperID",
-    parameters: [
-      {
-        name: "@shipperID",
-        value: shipperID
-      }
-    ]
-  };
-  const container = client.database(databaseId).container(containerId);
-  const { resources: results } = await container.items.query(querySpec).fetchAll();
-  const items = []
-  for (var queryResult of results) {
-    let resultString = JSON.stringify(queryResult);
-    items.push(resultString);
-    // console.log(`\tQuery returned ${resultString}\n`)
-  }
-  shipping_data=items.map(r=>JSON.parse(r)).map((r)=>({
-    Date: r.Date,
-    WarehouseID: r.WarehouseID,
-    ShippingPO: r.ShippingPO,
-    ShipmentID: r.ShipmentID,
-    BoxesRcvd: r.BoxesRcvd
-  }))
-  console.log(shipping_data);
-  client.dispose()
-  return {"Received":shipping_data}
-}
 
 const BASE_API_URL = "https://chaoscybercats-warehouse-automation-function.azurewebsites.net/api";
 const URL_EXTENSION_SHIPPING_DATA_BY_SHIPPERID = "/shipping_data"

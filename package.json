@@ -5,7 +5,8 @@
   "type": "commonjs",
   
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "start": "node ./bin/www",
+    "serve": "node ./bin/www",
     "test": "DEBUG=chaoscybercats-warehouse-automation:server node ./bin/www"
   },
   "dependencies": {
