@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+const TOKEN = process.env.REACT_APP_Shipping_data_api_key;
 /* GET home page. */
 router.get('/', function (req, res, next) {
     var stuff = [
@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
             "process.env.REACT_APP_SECRET": process.env.REACT_APP_SECRET
         },
         {
-            "process.env.REACT_APP_Shipping_data_api_key": process.env.REACT_APP_Shipping_data_api_key
+            "process.env.REACT_APP_Shipping_data_api_key": TOKEN
         },
         {
             "config.REACT_APP_SECRET": "nothing"
@@ -22,7 +22,7 @@ router.get('/', function (req, res, next) {
     ]
     var items = stuff
 
-    res.send(items);
+    res.send(TOKEN);
 });
 
 module.exports = router;
