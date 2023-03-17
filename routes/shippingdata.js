@@ -38,7 +38,7 @@ const fetchRecord = async (shipperid) => {
       console.log(cl);
       // setRecords(cl);
       return cl;
-    }).catch(err => console.log(err));
+    });
   return shipping_data
 }
 
