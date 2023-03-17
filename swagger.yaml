@@ -20,7 +20,7 @@ paths:
           application/json:
             schema:
               type: object
-              $ref: '#/components/schemas/stuffpost'
+              $ref: '#/components/schemas/post_shipping_item'
       responses:
         '200':
           description: you know what you are doing!
@@ -48,7 +48,7 @@ paths:
             application/json:
               schema: 
                 type: object
-                $ref: '#/components/schemas/stuffget'
+                $ref: '#/components/schemas/get_shipping_item'
 components:
   schemas:
     shipping_item:
@@ -75,12 +75,12 @@ components:
         ShippingPO:
           type: string
           example: 0
-    stuffget:
+    get_shipping_item:
       type: array
       items:
         type: object
         $ref: '#/components/schemas/shipping_item'
-    stuffpost:
+    post_shipping_item:
       type: object
       properties:
         Received: 
