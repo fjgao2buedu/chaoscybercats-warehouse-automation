@@ -2,7 +2,7 @@ require('dotenv').config();
 const fetch = require('node-fetch')
 var express = require('express');
 var router = express.Router();
-
+const config = require('../config')
 const url = require('url')
 
 const BASE_API_URL = "https://chaoscybercats-warehouse-automation-function.azurewebsites.net/api";
@@ -11,7 +11,7 @@ const GET_SHIPPING_DATA = (shipperid) => {
   return BASE_API_URL + URL_EXTENSION_SHIPPING_DATA_BY_SHIPPERID + "?shipperid=" + shipperid;
 }
 // You can get this from Piazza
-const TOKEN = process.env.REACT_APP_Shipping_data_api_key||"vAeF39zvULVjTaB8sBxTxJRzZ3LQGl2QeVDBtikEHnEMAzFuQEC94w==";
+const TOKEN = config.REACT_APP_Shipping_data_api_key||process.env.REACT_APP_Shipping_data_api_key||"UA0l5mjHAsT3ZW2Gan4OyuEDUhr7kgte9jxv-rPtfxxiAzFurDYnlw==";
 // This is a helper function to generate the headers with the x-functions-key attached
 const GET_DEFAULT_HEADERS = () => {
   var headers = {
@@ -38,7 +38,7 @@ const fetchRecord = async (shipperid) => {
       console.log(cl);
       // setRecords(cl);
       return cl;
-    })
+    }).catch(err => console.log(err));
   return shipping_data
 }
 
