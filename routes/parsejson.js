@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const config = require('../config')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -15,10 +14,10 @@ router.get('/', function (req, res, next) {
             "process.env.REACT_APP_Shipping_data_api_key": process.env.REACT_APP_Shipping_data_api_key
         },
         {
-            "config.REACT_APP_SECRET": config.REACT_APP_SECRET
+            "config.REACT_APP_SECRET": "nothing"
         },
         {
-            "config.REACT_APP_Shipping_data_api_key": config.REACT_APP_Shipping_data_api_key
+            "config.REACT_APP_Shipping_data_api_key": "nothing"
         }
     ]
     var items = stuff
