@@ -6,6 +6,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var shippingdataRouter = require('./routes/shippingdata.js');
 var parsejsonRouter = require('./routes/parsejson.js')
+var dataentryRouter = require('./routes/dataentry.js')
 
 // swagger
 var swaggerUI = require('swagger-ui-express');
@@ -32,6 +33,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use('/', indexRouter);
 app.use('/shipping_data', shippingdataRouter);
 app.use('/parsejson',parsejsonRouter);
+app.use('/dataentry',dataentryRouter);
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
