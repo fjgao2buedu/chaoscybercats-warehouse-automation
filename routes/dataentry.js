@@ -8,14 +8,15 @@ const {
   newPipeline
 } = require('@azure/storage-blob');
 
+const fetch = require('node-fetch')
 const express = require('express');
 const router = express.Router();
-const containerName1 = 'thumbnails';
+const containerName1 = 'imgpdfs';
 const multer = require('multer');
 const inMemoryStorage = multer.memoryStorage();
 const uploadStrategy = multer({ storage: inMemoryStorage }).single('image');
-const getStream = require('into-stream');
-const containerName2 = 'images';
+const getStream = require('./getstream');
+// const containerName2 = 'images';
 const ONE_MEGABYTE = 1024 * 1024;
 const uploadOptions = { bufferSize: 4 * ONE_MEGABYTE, maxBuffers: 20 };
 const ONE_MINUTE = 60 * 1000;
@@ -74,14 +75,17 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', uploadStrategy, async (req, res) => {
   const blobName = getBlobName(req.file.originalname);
-  const stream = getStream(req.file.buffer);
-  const containerClient = blobServiceClient.getContainerClient(containerName2);;
+  const stream = await getStream(req.file.buffer);
+  const containerClient = blobServiceClient.getContainerClient(containerName1);;
   const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
   try {
     await blockBlobClient.uploadStream(stream,
       uploadOptions.bufferSize, uploadOptions.maxBuffers,
       { blobHTTPHeaders: { blobContentType: "image/jpeg" } });
+    // insert into queue
+    var imgurl = "https://assignment4warehousa285.blob.core.windows.net/imgpdfs/" + blobName
+    await fetch("https://coordinator.proudhill-a9115a2b.eastus.azurecontainerapps.io/api/JobQueuePush?imgurl="+imgurl);
     res.render('success', { message: 'File uploaded to Azure Blob storage.' });
   } catch (err) {
     res.render('error', { message: err.message });
