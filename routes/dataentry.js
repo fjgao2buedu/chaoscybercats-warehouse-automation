@@ -85,6 +85,8 @@ router.post('/', uploadStrategy, async (req, res) => {
       { blobHTTPHeaders: { blobContentType: "image/jpeg" } });
     // insert into queue
     var imgurl = "https://assignment4warehousa285.blob.core.windows.net/imgpdfs/" + blobName
+    
+    // await fetch("http://localhost:7071/api/JobQueuePush?imgurl="+imgurl);
     await fetch("https://coordinator.proudhill-a9115a2b.eastus.azurecontainerapps.io/api/JobQueuePush?imgurl="+imgurl);
     res.render('success', { message: 'File uploaded to Azure Blob storage.' });
   } catch (err) {
