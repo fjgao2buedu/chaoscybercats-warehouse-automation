@@ -16,19 +16,16 @@
 # For more information on GitHub Actions for Azure: https://github.com/Azure/Actions
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
-name: Azure Web Apps Node
-
+name: CICD
 on:
-  workflow_dispatch:
   push:
-    branches: [ "node_ver" ]
-  
+    branches: [ "data_entry" ]
+  workflow_dispatch:
 
 env:
-  AZURE_RESOURCE_GROUP: assignment-4-warehouse-automation_group
-  AZURE_WEBAPP_NAME: chaoscybercats-warehouse-automation    # set this to your application's name
+  AZURE_WEBAPP_NAME: chaoscybercats-warehouse-automation-webapp-dev-eastus    # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '18.x'                # set this to the node version to use
+  NODE_VERSION: '14.x'                # set this to the node version to use
 
 permissions:
   contents: read
@@ -45,26 +42,18 @@ jobs:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
 
-    - name: npm install
+    - name: npm install, build, and test
       run: |
         npm install
-        
-    - name: build, and test
-      run: |
-        CI=false npm run build --if-present
-    
-    # Zip artifacts to speed things up
-    - name: Zip artifact for deployment
-      run: zip release.zip ./* -qr
-    # We exclude node_modules and dist because the Azure Oryx/Kudu deploy runs npm install and rebuilds everything anyway...
-    # If we zip them we just increase the size of the zip file and it's not needed
+        npm run build --if-present
+        npm run test --if-present
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
       with:
         name: node-app
-        path: release.zip
-         
+        path: .
+
   deploy:
     permissions:
       contents: none
@@ -79,22 +68,11 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: node-app
-        
-    - name: Log in with Azure
-      uses: azure/login@v1
-      with:
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
 
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        publish-profile: ${{ secrets.CHAOSCYBERCATS_WAREHOUSE_AUTOMATION_WEBAPP_DEV_EASTUS_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-        
-    - name: Azure CLI script
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          az webapp deployment source config-zip -g ${{ env.AZURE_RESOURCE_GROUP }} -n ${{ env.AZURE_WEBAPP_NAME }} --src release.zip
