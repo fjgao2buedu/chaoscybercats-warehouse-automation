@@ -16,6 +16,7 @@ const file  = fs.readFileSync('./swagger.yaml', 'utf8')
 const swaggerDocument = YAML.parse(file)
 
 var app = express();
+const port = process.env.PORT || 8080;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -50,5 +51,9 @@ app.use('/dataentry',dataentryRouter);
 //   res.status(err.status || 500);
 //   res.render('error');
 // });
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port} .`);
+  });
 
 module.exports = app;
