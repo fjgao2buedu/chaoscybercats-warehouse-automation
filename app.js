@@ -1,4 +1,7 @@
 // var createError = require('http-errors');
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -15,6 +18,7 @@ const file  = fs.readFileSync('./swagger.yaml', 'utf8')
 const swaggerDocument = YAML.parse(file)
 
 var app = express();
+const port = process.env.PORT || 8080;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -49,4 +53,8 @@ app.use('/parsejson',parsejsonRouter);
 //   res.render('error');
 // });
 
-module.exports = app;
+app.listen(port, () => {
+  console.log(`CCC Warehouse Automation listening at http://localhost:${port} .`);
+});
+
+// module.exports = app;
