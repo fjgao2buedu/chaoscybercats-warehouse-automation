@@ -80,15 +80,16 @@ router.post('/', uploadStrategy, async (req, res) => {
   const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
   try {
+    const isPdf = blobName.endsWith('.pdf');
     await blockBlobClient.uploadStream(stream,
       uploadOptions.bufferSize, uploadOptions.maxBuffers,
-      { blobHTTPHeaders: { blobContentType: "image/jpeg" } });
+      { blobHTTPHeaders: { blobContentType: (isPdf?"application/pdf":"image/jpeg") } });
     // insert into queue
     var imgurl = "https://assignment4warehousa285.blob.core.windows.net/imgpdfs/" + blobName
     
     // await fetch("http://localhost:7071/api/JobQueuePush?imgurl="+imgurl);
     await fetch("https://coordinator.proudhill-a9115a2b.eastus.azurecontainerapps.io/api/JobQueuePush?imgurl="+imgurl);
-    res.render('success', { message: 'File uploaded to Azure Blob storage.' });
+    res.render('success', { message: 'File uploaded to Azure Blob storage.', filename: blobName, isPdf: isPdf, imgurl: imgurl});
   } catch (err) {
     res.render('error', { message: err.message });
   }
