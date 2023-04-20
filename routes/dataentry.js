@@ -1,5 +1,8 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
+  var baseUrl = "http://localhost:7071/api"
+} else {
+  var baseUrl = "https://coordinator.proudhill-a9115a2b.eastus.azurecontainerapps.io/api"
 }
 
 const {
@@ -37,6 +40,11 @@ const getBlobName = originalName => {
   const identifier = Math.random().toString().replace(/0\./, '');
   return `${identifier}-${originalName}`;
 };
+
+const functionUrl = "/JobQueuePush"
+const GET_MEDIA_ADDRESS_URL = (imgurl) => {
+  return baseUrl + functionUrl + "?imgurl=" + imgurl;
+}
 
 router.get('/', async (req, res, next) => {
 
@@ -83,13 +91,13 @@ router.post('/', uploadStrategy, async (req, res) => {
     const isPdf = blobName.endsWith('.pdf');
     await blockBlobClient.uploadStream(stream,
       uploadOptions.bufferSize, uploadOptions.maxBuffers,
-      { blobHTTPHeaders: { blobContentType: (isPdf?"application/pdf":"image/jpeg") } });
+      { blobHTTPHeaders: { blobContentType: (isPdf ? "application/pdf" : "image/jpeg") } });
     // insert into queue
     var imgurl = "https://assignment4warehousa285.blob.core.windows.net/imgpdfs/" + blobName
     
-    // await fetch("http://localhost:7071/api/JobQueuePush?imgurl="+imgurl);
-    await fetch("https://coordinator.proudhill-a9115a2b.eastus.azurecontainerapps.io/api/JobQueuePush?imgurl="+imgurl);
-    res.render('success', { message: 'File uploaded to Azure Blob storage.', filename: blobName, isPdf: isPdf, imgurl: imgurl});
+    const url = GET_MEDIA_ADDRESS_URL(imgurl)
+    await fetch(url);
+    res.render('success', { message: 'File uploaded to Azure Blob storage.', filename: blobName, isPdf: isPdf, imgurl: imgurl });
   } catch (err) {
     res.render('error', { message: err.message });
   }
