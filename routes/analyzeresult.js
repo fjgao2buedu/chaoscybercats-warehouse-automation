@@ -42,6 +42,7 @@ const fetchResult = async (filename) => {
 router.get('/', async function (req, res, next) {
   const filename = req.query.filename;
   const message = await fetchResult(filename);
+  console.log(`filename: ${filename}`);
   res.send(message);
 });
 
