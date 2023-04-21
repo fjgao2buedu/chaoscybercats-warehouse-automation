@@ -1,6 +1,6 @@
 if (process.env.NODE_ENV !== 'production') {
   var baseUrl = "http://localhost:7071/api"
-}else{
+} else {
   var baseUrl = "https://coordinator.proudhill-a9115a2b.eastus.azurecontainerapps.io/api"
 }
 
@@ -25,25 +25,25 @@ const GET_FILE_ANALYZE_URL = (filename) => {
 
 const fetchResult = async (filename) => {
   const url = GET_FILE_ANALYZE_URL(filename)
-  const shipping_data =
+  const formResult =
     await fetch(url, {
       method: "GET",
       // headers: GET_DEFAULT_HEADERS()
     })
       .then(res => res.json())
-      // .then(cl => {
-      //   console.log(cl);
-      //   return cl;
-      // });
-  return shipping_data
+  return formResult
 }
 
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
   const filename = req.query.filename;
-  const message = await fetchResult(filename);
-  console.log(`filename: ${filename}`);
-  res.send(message);
+  // console.log(`filename: ${filename}`);
+  if (filename === "") {
+    res.send({ warning: "filename empty." });
+  } else {
+    const message = await fetchResult(filename);
+    res.send(message);
+  }
 });
 
 module.exports = router;
