@@ -63,7 +63,7 @@ jobs:
       working-directory: './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dataview'
       run: |
         npm install 
-    - name: npm build client
+    - name: npm build dataview
       working-directory: './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dataview'
       run: |
         npm run build
