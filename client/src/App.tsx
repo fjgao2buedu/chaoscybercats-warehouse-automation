@@ -126,7 +126,6 @@ function App() {
               }
             </Select> */}
           </div>
-          </div>
           <div style={{ width: "100%" }}>
             <a href="/">view shipping data</a>
           </div>

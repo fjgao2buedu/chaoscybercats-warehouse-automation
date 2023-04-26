@@ -60,7 +60,6 @@ function App() {
           </Typography>
           <div style={{ width: "100%" }}>
             <SearchBar parentCallback={callback}></SearchBar>
-
             {/* <Select fullWidth={true}
               label="Class"
               onChange={itemSelected}
