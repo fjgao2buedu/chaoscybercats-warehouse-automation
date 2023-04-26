@@ -39,10 +39,10 @@ function App() {
   // };
 
   const callback = (records: any[]) => {
-    console.log("update data view: ",records)
+    console.log("update data view: ", records)
     setRecords(records);
     // do something with value in parent component, like save to state
-}
+  }
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -54,15 +54,13 @@ function App() {
         </Grid>
         <Grid xs={12} md={4}>
           <Typography variant="h4" gutterBottom>Search
-          {/* {process.env.APPLICATION_SECRET}
+            {/* {process.env.APPLICATION_SECRET}
           {process.env.REACT_APP_SECRET}
           {process.env.REACT_APP_Shipping_data_api_key} */}
           </Typography>
           <div style={{ width: "100%" }}>
             <SearchBar parentCallback={callback}></SearchBar>
-            <a href="/">view shipping data</a>
-            <a href="/dataentry">upload file</a>
-            <a href="/dataview">view processed file data</a>
+
             {/* <Select fullWidth={true}
               label="Class"
               onChange={itemSelected}
@@ -74,6 +72,15 @@ function App() {
                   <MenuItem key={value} value={value}>{label}</MenuItem>))
               }
             </Select> */}
+          </div>
+          <div style={{ width: "100%" }}>
+            <a href="/">view shipping data</a>
+          </div>
+          <div style={{ width: "100%" }}>
+            <a href="/dataentry">upload file</a>
+          </div>
+          <div style={{ width: "100%" }}>
+            <a href="/dataview">view processed file data</a>
           </div>
         </Grid>
         <Grid xs={12} md={8}>

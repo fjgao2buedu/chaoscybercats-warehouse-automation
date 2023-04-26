@@ -114,11 +114,7 @@ function App() {
           </Typography>
           <div style={{ width: "100%" }}>
             <SearchBar parentCallback={callback}></SearchBar>
-            <a href="/">view shipping data</a>
-            <a href="/dataentry">upload file</a>
-            <a href="/dataview">view processed file data</a>
-            {<a href="/">view shipping data</a>
-              /* <Select fullWidth={true}
+            {/* <Select fullWidth={true}
               label="Class"
               onChange={itemSelected}
               defaultValue={''}
@@ -129,6 +125,16 @@ function App() {
                   <MenuItem key={value} value={value}>{label}</MenuItem>))
               }
             </Select> */}
+          </div>
+          </div>
+          <div style={{ width: "100%" }}>
+            <a href="/">view shipping data</a>
+          </div>
+          <div style={{ width: "100%" }}>
+            <a href="/dataentry">upload file</a>
+          </div>
+          <div style={{ width: "100%" }}>
+            <a href="/dataview">view processed file data</a>
           </div>
         </Grid>
         <Grid xs={12} md={8}>
