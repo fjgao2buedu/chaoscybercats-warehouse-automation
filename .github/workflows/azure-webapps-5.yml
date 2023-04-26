@@ -42,9 +42,34 @@ jobs:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
 
-    - name: npm install, build, and test
+    - name: npm install
+      working-directory: './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
       run: |
         npm install
+
+    - name: npm client install
+      working-directory: './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/client'
+      run: |
+        npm install 
+    - name: npm build client
+      working-directory: './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/client'
+      run: |
+        npm run build
+        rm -r public
+        rm -r node_modules
+        rm -r src
+    
+    - name: npm dataview install
+      working-directory: './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dataview'
+      run: |
+        npm install 
+    - name: npm build client
+      working-directory: './${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/dataview'
+      run: |
+        npm run build
+        rm -r public
+        rm -r node_modules
+        rm -r src
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3

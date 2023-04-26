@@ -3,6 +3,7 @@ const path = require('path');
 const indexRouter = require('./routes/index.js');
 const analyzeresultRouter = require('./routes/analyzeresult.js')
 const dataentryRouter = require('./routes/dataentry.js')
+const dataviewRouter = require('./routes/dataview.js')
 const parsejsonRouter = require('./routes/parsejson.js')
 const shippingdataRouter = require('./routes/shippingdata.js');
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use('/', indexRouter);
 app.use('/analyzeresult', analyzeresultRouter);
 app.use('/dataentry', dataentryRouter);
+app.use('/dataview', dataviewRouter);
 app.use('/parsejson', parsejsonRouter);
 app.use('/shippingdata', shippingdataRouter);
 
