@@ -7,7 +7,7 @@
 // export const MY_BU_ID = "U67453988";
 
 // const BASE_API_URL = "https://chaoscybercats-warehouse-automation.azurewebsites.net/";
-const URL_EXTENSION_SHIPPING_DATA_BY_SHIPPERID = "/shipping_data"
+const URL_EXTENSION_SHIPPING_DATA_BY_SHIPPERID = "/shippingdata"
 export const GET_SHIPPING_DATA = (shipperid: string) => {
   return URL_EXTENSION_SHIPPING_DATA_BY_SHIPPERID + "?shipperid=" + shipperid;
 }
